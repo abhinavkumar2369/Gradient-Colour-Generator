@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title -->
+    <title>Gradient Generator</title>
+    
+    <!-- External CSS Linking -->
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="gradient-box" id="gradientBox"></div>
+        <div class="color-inputs">
+
+            <!-- Color Box -->
+            <div class="color-input">
+                <label>Color 1</label>
+                <input type="color" id="color1" value="#ff0000">
+            </div>
+
+            <!-- Color Box -->
+            <div class="color-input">
+                <label>Color 2</label>
+                <input type="color" id="color2" value="#00ff00">
+            </div>
+        </div>
+
+        <div class="buttons">
+
+            <!-- Generate Gradient -->
+            <button class="generate-btn" onclick="generateGradient()">Generate</button>
+
+            <!-- Copy Button -->
+            <button class="copy-btn" onclick="copyCSS()">Copy CSS</button>
+        </div>
+
+        <div class="css-code" id="cssCode"></div>
+    </div>
+
+    <script>
+        function generateGradient() {
+            const color1 = document.getElementById('color1').value;
+            const color2 = document.getElementById('color2').value;
+            const angle = Math.floor(Math.random() * 361);
+            
+            const gradientBox = document.getElementById('gradientBox');
+            const cssCode = document.getElementById('cssCode');
+            
+            const gradient = `linear-gradient(${angle}deg, ${color1}, ${color2})`;
+            gradientBox.style.background = gradient;
+            
+            cssCode.textContent = `background: ${gradient};`;
+        }
+
+        function copyCSS() {
+            const cssCode = document.getElementById('cssCode').textContent;
+            const textarea = document.createElement('textarea');
+            textarea.value = cssCode;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+    
+            const copyBtn = document.querySelector('.copy-btn');
+            const originalText = copyBtn.textContent;
+            copyBtn.textContent = 'Copied!';
+            setTimeout(() => {
+                copyBtn.textContent = originalText;
+            }, 1500);
+        }
+
+        generateGradient();
+    </script>
+</body>
+</html>
